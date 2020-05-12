@@ -19,6 +19,7 @@ export type purchaseDataModel = {
   reference: string;
   merchantAccount: string;
   returnUrl: string;
+  redirectUrl?: any;
 };
 
 export type paymentDataModel = {
@@ -56,6 +57,10 @@ const App = () => {
       .catch((Error) => console.log(Error));
   }, []);
 
+  const gcashRedirect = (redirectUrl: string) => {
+    window.location.replace(redirectUrl);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -64,7 +69,9 @@ const App = () => {
             text="Get Payment Methods"
             onClick={() => {
               getAdyenConfig();
-              getPaymentMethods();
+              getPaymentMethods().then((Response) => {
+                console.log(Response);
+              });
             }}
           />
         </div>
@@ -73,7 +80,9 @@ const App = () => {
             text="Initiate Payment"
             onClick={() => {
               initiatePayment(purchaseData)
-                .then((Response) => console.log(Response))
+                .then((Response) => {
+                  gcashRedirect(Response.data.redirectUrl);
+                })
                 .catch((Error) => console.log(Error));
             }}
           />
