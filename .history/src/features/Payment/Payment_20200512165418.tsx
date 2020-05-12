@@ -75,7 +75,7 @@ const App = () => {
                 <PaymentModel />
               </Route>
               <Route path="/">
-                <Link to="/paymentmethods">    
+                <Link to="/purchase">    
                   <div>
                     <Button
                     text="Get Payment Methods"
@@ -86,7 +86,7 @@ const App = () => {
                   />
                   </div>
                 </Link>
-                <Link to="/purchase">
+                <Link to="/payment">
                   <div>
                     <Button
                       text="Initiate Payment"
@@ -98,7 +98,7 @@ const App = () => {
                     />
                   </div>
                 </Link>
-                <Link to="/payment">
+                <Link to="">
                   <div>
                     <Button
                       text="Additional Payment"

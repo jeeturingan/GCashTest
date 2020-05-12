@@ -10,7 +10,6 @@ import { Button } from 'modus-ui';
 import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
 import PurchaseModel from '../PurchaseModel';
 import PaymentModel from '../PaymentModel';
-import PaymentMethods from '../PaymentMethods';
 
 export type purchaseDataModel = {
   amount: {
@@ -65,9 +64,6 @@ const App = () => {
       <header className="App-header">
         <BrowserRouter>
           <Switch>
-              <Route path="/paymentmethods">
-                <PaymentMethods />
-              </Route>
               <Route path="/purchase">
                 <PurchaseModel />
               </Route>
@@ -75,7 +71,7 @@ const App = () => {
                 <PaymentModel />
               </Route>
               <Route path="/">
-                <Link to="/paymentmethods">    
+                <Link to="/paymentMethods">    
                   <div>
                     <Button
                     text="Get Payment Methods"
@@ -86,7 +82,7 @@ const App = () => {
                   />
                   </div>
                 </Link>
-                <Link to="/purchase">
+                <Link to="/payment">
                   <div>
                     <Button
                       text="Initiate Payment"
@@ -98,7 +94,7 @@ const App = () => {
                     />
                   </div>
                 </Link>
-                <Link to="/payment">
+                <Link to="">
                   <div>
                     <Button
                       text="Additional Payment"
