@@ -197,14 +197,10 @@ function findCurrency(type) {
       return 'CNY';
     case 'dotpay':
       return 'PLN';
-    case 'PHP':
-      return 'gcash';
     case 'boletobancario':
       return 'BRL';
-    case 'gcash':
-      return 'PHP';
     default:
-      return 'PHP';
+      return 'EUR';
   }
 }
 

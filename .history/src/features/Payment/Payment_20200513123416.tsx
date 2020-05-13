@@ -11,9 +11,9 @@ import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
 import PurchaseModel from '../PurchaseModel';
 import PaymentModel from '../PaymentModel';
 import PaymentMethods from '../PaymentMethods';
-import ProductCart from '../Demo';
 
 export type purchaseDataModel = {
+  merchantAccount: string,
   amount: {
     currency: string;
     value: number;
@@ -21,7 +21,7 @@ export type purchaseDataModel = {
   paymentMethod: {
     type: string;
   };
-  merchantAccount: string;
+
   returnUrl: string;
   redirectUrl?: any;
 };
@@ -43,13 +43,13 @@ export type paymentMethod = {
 
 //DUMMY DATA
 const purchaseData: purchaseDataModel = {
-    merchantAccount:"BizboxECOM",
+    merchantAccount:"YOUR_MERCHANT_ACCOUNT",
     amount:{
-      currency: 'PHP',
-      value: 1000
+      currency:"PHP",
+      value:1000
     },
     paymentMethod:{
-      type:"gcash"
+      "type":"gcash"
     },
     returnUrl:"https://your-company.com/checkout?shopperOrder=12xy.."
 
@@ -90,7 +90,6 @@ const App = () => {
         value: data.type,
       });
     });
-    
     return radioBtns = (
       <RadioButtonGroup
         label={'Payment Methods: '}
@@ -114,14 +113,10 @@ const App = () => {
             <Route path="/purchase">
               <PurchaseModel />
             </Route>
-            <Route path="/payment" component={PaymentModel}></Route>
-            <Route path="/demo" component={ProductCart} />
+            <Route path="/payment">
+              <PaymentModel />
+            </Route>
             <Route path="/">
-              <Link to="/demo">
-                <div>
-                  <Button text="Demo" />
-                </div>
-              </Link>
               <Link to="/paymentmethods">
                 <div>
                   <Button

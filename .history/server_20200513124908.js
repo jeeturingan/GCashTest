@@ -114,7 +114,7 @@ app.post('/api/initiatePayment', async (req, res) => {
   try {
     // Ideally the data passed here should be computed based on business logic
     const response = await checkout.payments({
-      amount: { currency, value: 1000 }, // value is 10€ in minor units
+      amount: { currency: 'PHP', value: 1000 }, // value is 10€ in minor units
       reference: `${Date.now()}`,
       merchantAccount: process.env.MERCHANT_ACCOUNT,
       // @ts-ignore
@@ -197,14 +197,10 @@ function findCurrency(type) {
       return 'CNY';
     case 'dotpay':
       return 'PLN';
-    case 'PHP':
-      return 'gcash';
     case 'boletobancario':
       return 'BRL';
-    case 'gcash':
-      return 'PHP';
     default:
-      return 'PHP';
+      return 'EUR';
   }
 }
 
