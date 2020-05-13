@@ -113,7 +113,7 @@ const PaymentModel = () => {
                                         }}
                                     />
                                 </div>
-                            <pre style={{textAlign: 'left'}}>{JSON.stringify(values, null, 2)}</pre>
+                            <pre style={{textAlign:'left'}}>{JSON.stringify(values, null, )}</pre>
                             </form>
                         );
                     }}

@@ -56,7 +56,7 @@ const PaymentModel = () => {
     return (
         <div>
             <h1>Payment Model</h1>
-            <div>
+            <div >
                 <Formik initialValues={initialValues} 
                     onSubmit={(data)=>{console.log("Submit:", data)}}>
                     {props => {
@@ -113,7 +113,7 @@ const PaymentModel = () => {
                                         }}
                                     />
                                 </div>
-                            <pre style={{textAlign: 'left'}}>{JSON.stringify(values, null, 2)}</pre>
+                            <pre>{JSON.stringify(values, null, 2)}</pre>
                             </form>
                         );
                     }}

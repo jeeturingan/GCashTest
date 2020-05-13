@@ -71,7 +71,7 @@ const PaymentModel = () => {
                                         placeholder="GCash, Paymaya..."
                                         currentValue={inputPaymentType}
                                         options={optionsPaymentType}
-                                        onChange={(value: any) => setInputPaymentType(value)}
+                                        onChange={(value) => setInputPaymentType(value)}
                                     />
                                 </div>
                                 <div>
