@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Payment.css';
 import {
   getAdyenConfig,
@@ -6,8 +6,8 @@ import {
   initiatePayment,
   submitAdditionalDetails,
 } from '../../api/checkout';
-import { Button } from 'modus-ui';
-import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
+import { Button, RadioButtonGroupOption, RadioButtonGroup } from 'modus-ui';
+import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
 import PurchaseModel from '../PurchaseModel';
 import PaymentModel from '../PaymentModel';
 import PaymentMethods from '../PaymentMethods';
@@ -35,6 +35,12 @@ export type paymentDataModel = {
   };
 };
 
+export type paymentMethod = {
+  name: string;
+  type: string;
+  supportsRecurring: boolean;
+};
+
 //DUMMY DATA
 const purchaseData: purchaseDataModel = {
   amount: { currency: 'PHP', value: 1000 },
@@ -52,12 +58,19 @@ const paymentData: paymentDataModel = {
     payload: 'Ab02b4c0!BQABAgCW5sxB4e/==',
   },
 };
+//End of dummy data
 
 const App = () => {
+  const [radioValue, setRadioValue] = useState('');
+  let radioBtns;
+
   useEffect(() => {
     getAdyenConfig();
     getPaymentMethods()
-      .then((Response) => console.log(Response))
+      .then((Response) => {
+        mapPaymentMethods(Response.data.paymentMethods);
+        //console.log(Response.data);
+      })
       .catch((Error) => console.log(Error));
   }, []);
 
@@ -65,57 +78,83 @@ const App = () => {
     window.location.replace(redirectUrl);
   };
 
+  const mapPaymentMethods = (arrPaymentMethod: Array<paymentMethod>) => {
+    let paymentMethods: RadioButtonGroupOption[] = [];
+
+    arrPaymentMethod.map((data) => {
+      paymentMethods = paymentMethods.concat({
+        id: data.type,
+        text: data.name,
+        value: data.type,
+      });
+    });
+
+    radioBtns = (
+      <RadioButtonGroup
+        label={'Payment Methods: '}
+        options={paymentMethods}
+        value={radioValue}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>): void => {
+          setRadioValue(event.target.value);
+        }}
+      />
+    );
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <BrowserRouter>
           <Switch>
-              <Route path="/paymentmethods">
-                <PaymentMethods />
-              </Route>
-              <Route path="/purchase">
-                <PurchaseModel />
-              </Route>
-              <Route path="/payment">
-                <PaymentModel />
-              </Route>
-              <Route path="/">
-                <Link to="/paymentmethods">    
-                  <div>
-                    <Button
+            <Route path="/paymentmethods">
+              <PaymentMethods />
+            </Route>
+            <Route path="/purchase">
+              <PurchaseModel />
+            </Route>
+            <Route path="/payment">
+              <PaymentModel />
+            </Route>
+            <Route path="/">
+              <Link to="/paymentmethods">
+                <div>
+                  <Button
                     text="Get Payment Methods"
                     onClick={() => {
                       getAdyenConfig();
                       getPaymentMethods();
                     }}
                   />
-                  </div>
-                </Link>
-                <Link to="/purchase">
-                  <div>
-                    <Button
-                      text="Initiate Payment"
-                      onClick={() => {
-                        initiatePayment(purchaseData)
-                          .then((Response) => console.log(Response))
-                          .catch((Error) => console.log(Error));
-                      }}
-                    />
-                  </div>
-                </Link>
-                <Link to="/payment">
-                  <div>
-                    <Button
-                      text="Additional Payment"
-                      onClick={() => {
-                        submitAdditionalDetails(paymentData)
-                          .then((Response) => console.log(Response))
-                          .catch((Error) => console.log(Error));
-                      }}
-                    />
-                  </div>
-                </Link>
-              </Route>
+                </div>
+              </Link>
+              <Link to="/purchase">
+                <div>
+                  <Button
+                    text="Initiate Payment"
+                    onClick={() => {
+                      initiatePayment(purchaseData)
+                        .then((Response) =>
+                          gcashRedirect(Response.data.redirectUrl)
+                        )
+                        .catch((Error) => console.log(Error));
+                    }}
+                  />
+                </div>
+              </Link>
+              <Link to="/payment">
+                <div>
+                  <Button
+                    text="Additional Payment"
+                    onClick={() => {
+                      submitAdditionalDetails(paymentData)
+                        .then((Response) => console.log(Response))
+                        .catch((Error) => console.log(Error));
+                    }}
+                  />
+                </div>
+              </Link>
+              <div></div>
+            </Route>
           </Switch>
         </BrowserRouter>
       </header>
