@@ -5,7 +5,6 @@ import {
     InputField,
     Button,
     SelectField,
-    ButtonKind,
 } from 'modus-ui';
 
 export type purchaseDetailModel = {
@@ -105,8 +104,7 @@ const PaymentModel = () => {
                                 </div>
                                 <div>
                                     <Button 
-                                        kind={ButtonKind.Default}
-                                        text="Checkout"
+                                        text="Submit"
                                         onClick={()=>{}}
                                     />
                                 </div>

@@ -4,22 +4,26 @@ import {initiatePayment} from '../../api/checkout';
 import {
     InputField,
     Button,
-    SelectField,
     ButtonKind,
+    Spinner,
+    SelectField,
+    DateTimeField,
+    DateTimeFieldOption
 } from 'modus-ui';
 
 export type purchaseDetailModel = {
-    currency?: string,
-    value?: number,
-    type?: string,
-    merchantAccount?: string
-    returnUrl?: string,
-    redirectUrl?: string
-};
+    currency: string,
+    value: number,
+    type: string,
+    merchantAccount: string
+    returnUrl: string,
+    redirectUrl: string
+}
+
 
 const purchaseDetailInitial: purchaseDetailModel = {};
 
-const PaymentModel = () => {
+const PaymentModel = (): JSX.Element => {
 
     const [purchaseDetail, setPurchaseDetail] = useState(purchaseDetailInitial);
 
@@ -30,8 +34,7 @@ const PaymentModel = () => {
 
     const optionsCurrencyType = [
         {value: 'PHP', label: 'PHP'},
-        {value: 'EUR', label: 'EUR'},
-        {value: 'USD', label: 'USD'}
+        {value: 'Paymaya', label: 'Paymaya'}
     ];
 
     const optionsMerchantAccount = [
@@ -42,7 +45,7 @@ const PaymentModel = () => {
     const x = purchaseDetail;
     const [inputPaymentType, setInputPaymentType] = useState(optionsPaymentType[0]);
     const [inputCurrencyType, setInputCurrencyType] = useState(optionsCurrencyType[0]);
-    const [inputMerchantAccount, setInputMerchantAccount] = useState(optionsMerchantAccount[0]);
+    const [inputMerchantAccount, setInputMerchantAccount] = useState(optionsMerchantAccount);
 
     const initialValues = {
         currency: optionsCurrencyType[0],
@@ -101,13 +104,6 @@ const PaymentModel = () => {
                                         placeholder="Please enter the value.."
                                         onChange={handleChange}
                                         value={values.value}
-                                    />
-                                </div>
-                                <div>
-                                    <Button 
-                                        kind={ButtonKind.Default}
-                                        text="Checkout"
-                                        onClick={()=>{}}
                                     />
                                 </div>
                             </form>

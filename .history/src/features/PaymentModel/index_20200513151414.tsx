@@ -5,14 +5,13 @@ import {
     InputField,
     Button,
     SelectField,
-    ButtonKind,
 } from 'modus-ui';
 
 export type purchaseDetailModel = {
-    currency?: string,
-    value?: number,
-    type?: string,
-    merchantAccount?: string
+    currency: string,
+    value: number,
+    type: string,
+    merchantAccount: string
     returnUrl?: string,
     redirectUrl?: string
 };
@@ -30,8 +29,7 @@ const PaymentModel = () => {
 
     const optionsCurrencyType = [
         {value: 'PHP', label: 'PHP'},
-        {value: 'EUR', label: 'EUR'},
-        {value: 'USD', label: 'USD'}
+        {value: 'Paymaya', label: 'Paymaya'}
     ];
 
     const optionsMerchantAccount = [
@@ -42,7 +40,7 @@ const PaymentModel = () => {
     const x = purchaseDetail;
     const [inputPaymentType, setInputPaymentType] = useState(optionsPaymentType[0]);
     const [inputCurrencyType, setInputCurrencyType] = useState(optionsCurrencyType[0]);
-    const [inputMerchantAccount, setInputMerchantAccount] = useState(optionsMerchantAccount[0]);
+    const [inputMerchantAccount, setInputMerchantAccount] = useState(optionsMerchantAccount);
 
     const initialValues = {
         currency: optionsCurrencyType[0],
@@ -105,8 +103,7 @@ const PaymentModel = () => {
                                 </div>
                                 <div>
                                     <Button 
-                                        kind={ButtonKind.Default}
-                                        text="Checkout"
+                                        text="Submit"
                                         onClick={()=>{}}
                                     />
                                 </div>

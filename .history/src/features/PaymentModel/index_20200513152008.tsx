@@ -105,7 +105,7 @@ const PaymentModel = () => {
                                 </div>
                                 <div>
                                     <Button 
-                                        kind={ButtonKind.Default}
+                                        kind={ButtonKind}
                                         text="Checkout"
                                         onClick={()=>{}}
                                     />

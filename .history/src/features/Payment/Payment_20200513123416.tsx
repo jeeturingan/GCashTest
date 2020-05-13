@@ -13,6 +13,7 @@ import PaymentModel from '../PaymentModel';
 import PaymentMethods from '../PaymentMethods';
 
 export type purchaseDataModel = {
+  merchantAccount: string,
   amount: {
     currency: string;
     value: number;
@@ -20,7 +21,7 @@ export type purchaseDataModel = {
   paymentMethod: {
     type: string;
   };
-  merchantAccount: string;
+
   returnUrl: string;
   redirectUrl?: any;
 };
@@ -42,13 +43,13 @@ export type paymentMethod = {
 
 //DUMMY DATA
 const purchaseData: purchaseDataModel = {
-    merchantAccount:"BizboxECOM",
+    merchantAccount:"YOUR_MERCHANT_ACCOUNT",
     amount:{
-      currency: 'PHP',
-      value: 1000
+      currency:"PHP",
+      value:1000
     },
     paymentMethod:{
-      type:"gcash"
+      "type":"gcash"
     },
     returnUrl:"https://your-company.com/checkout?shopperOrder=12xy.."
 
@@ -89,7 +90,6 @@ const App = () => {
         value: data.type,
       });
     });
-    
     return radioBtns = (
       <RadioButtonGroup
         label={'Payment Methods: '}

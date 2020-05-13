@@ -13,6 +13,7 @@ import PaymentModel from '../PaymentModel';
 import PaymentMethods from '../PaymentMethods';
 
 export type purchaseDataModel = {
+  merchantAccount: string;
   amount: {
     currency: string;
     value: number;
@@ -20,7 +21,6 @@ export type purchaseDataModel = {
   paymentMethod: {
     type: string;
   };
-  merchantAccount: string;
   returnUrl: string;
   redirectUrl?: any;
 };
@@ -80,7 +80,8 @@ const App = () => {
     window.location.replace(redirectUrl);
   };
 
-  const mapPaymentMethods = (arrPaymentMethod: Array<paymentMethod>) => {
+  const mapPaymentMethods = (
+    arrPaymentMethod = Array<paymentMethod>;
     let paymentMethods: RadioButtonGroupOption[] = [];
     arrPaymentMethod.map((data) => {
         paymentMethods = paymentMethods.concat({
@@ -89,7 +90,6 @@ const App = () => {
         value: data.type,
       });
     });
-    
     return radioBtns = (
       <RadioButtonGroup
         label={'Payment Methods: '}
@@ -100,7 +100,7 @@ const App = () => {
         }}
       />
     );
-  };
+  );
 
   return (
     <div className="App">

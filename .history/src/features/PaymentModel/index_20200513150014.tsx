@@ -4,22 +4,26 @@ import {initiatePayment} from '../../api/checkout';
 import {
     InputField,
     Button,
-    SelectField,
     ButtonKind,
+    Spinner,
+    SelectField,
+    DateTimeField,
+    DateTimeFieldOption
 } from 'modus-ui';
 
 export type purchaseDetailModel = {
-    currency?: string,
-    value?: number,
-    type?: string,
-    merchantAccount?: string
-    returnUrl?: string,
-    redirectUrl?: string
-};
+    currency: string,
+    value: number,
+    type: string,
+    merchantAccount: string
+    returnUrl: string,
+    redirectUrl: string
+}
 
-const purchaseDetailInitial: purchaseDetailModel = {};
 
-const PaymentModel = () => {
+const purchaseDetailInitial = {};
+
+const PaymentModel = (): JSX.Element => {
 
     const [purchaseDetail, setPurchaseDetail] = useState(purchaseDetailInitial);
 
@@ -30,25 +34,18 @@ const PaymentModel = () => {
 
     const optionsCurrencyType = [
         {value: 'PHP', label: 'PHP'},
-        {value: 'EUR', label: 'EUR'},
-        {value: 'USD', label: 'USD'}
-    ];
-
-    const optionsMerchantAccount = [
-        {value: 'BizboxECOM', label: 'BizboxECOM'},
-        {value: 'BizboxPOS', label: 'BizboxPOS'}
-    ];
+        {value: 'Paymaya', label: 'Paymaya'}
+    ]
 
     const x = purchaseDetail;
     const [inputPaymentType, setInputPaymentType] = useState(optionsPaymentType[0]);
     const [inputCurrencyType, setInputCurrencyType] = useState(optionsCurrencyType[0]);
-    const [inputMerchantAccount, setInputMerchantAccount] = useState(optionsMerchantAccount[0]);
 
     const initialValues = {
         currency: optionsCurrencyType[0],
         type: optionsPaymentType[0],
         value: x.value,
-        merchantAccount: optionsMerchantAccount[0],
+        merchantAccount: x.merchantAccount,
         returnUrl: x.returnUrl,
         redirectUrl: x.redirectUrl
     }
@@ -84,30 +81,13 @@ const PaymentModel = () => {
                                     />
                                 </div>
                                 <div>
-                                    <SelectField 
-                                        name="merchantAccount"
-                                        label="Merchant Account"
-                                        placeholder="BizboxECOM"
-                                        currentValue={inputMerchantAccount}
-                                        options={optionsMerchantAccount}
-                                        onChange={(value: any) => setInputMerchantAccount(value)}
-                                    />
-                                </div>
-                                <div>
                                     <InputField 
-                                        type="number"
-                                        label="Value"
-                                        name="value"
-                                        placeholder="Please enter the value.."
+                                        type="text"
+                                        label="Merchant Account"
+                                        name="merchantAccount"
+                                        placeholder="Please enter Merchant Account"
                                         onChange={handleChange}
-                                        value={values.value}
-                                    />
-                                </div>
-                                <div>
-                                    <Button 
-                                        kind={ButtonKind.Default}
-                                        text="Checkout"
-                                        onClick={()=>{}}
+                                        value={values.merchantAccount}
                                     />
                                 </div>
                             </form>
