@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import { initiatePayment } from '../../api/checkout';
 import { InputField, Button, SelectField, ButtonKind } from 'modus-ui';
+import {purchaseDataModel} from '../Payment/Payment';
 
-export type purchaseDetailModel = {
+export type purchaseDetailModel1 = {
   currency?: string;
   value?: number;
   type?: string;
@@ -12,10 +13,27 @@ export type purchaseDetailModel = {
   redirectUrl?: string;
 };
 
-const purchaseDetailInitial: purchaseDetailModel = {};
+//DUMMY Data
+const purchaseData: purchaseDataModel = {
+  merchantAccount:"BizboxECOM",
+  amount:{
+    currency: 'PHP',
+    value: 1000
+  },
+  paymentMethod:{
+    type:"gcash"
+  },
+  returnUrl:"https://your-company.com/checkout?shopperOrder=12xy.."
+
+};
+
+const purchaseDetailInitial: purchaseDetailModel1 = {};
 
 const PaymentModel = () => {
   const [purchaseDetail, setPurchaseDetail] = useState(purchaseDetailInitial);
+  const gcashRedirect = (redirectUrl: string) => {
+    window.location.replace(redirectUrl);
+  };
 
   const optionsPaymentType = [
     { value: 'gcash', label: 'Gcash' },
@@ -28,11 +46,6 @@ const PaymentModel = () => {
     { value: 'USD', label: 'USD' },
   ];
 
-  const optionsMerchantAccount = [
-    { value: 'BizboxECOM', label: 'BizboxECOM' },
-    { value: 'BizboxPOS', label: 'BizboxPOS' },
-  ];
-
   const x = purchaseDetail;
   const [inputPaymentType, setInputPaymentType] = useState(
     optionsPaymentType[0]
@@ -40,15 +53,11 @@ const PaymentModel = () => {
   const [inputCurrencyType, setInputCurrencyType] = useState(
     optionsCurrencyType[0]
   );
-  const [inputMerchantAccount, setInputMerchantAccount] = useState(
-    optionsMerchantAccount[0]
-  );
 
   const initialValues = {
     currency: optionsCurrencyType[0],
     type: optionsPaymentType[0],
     value: x.value,
-    merchantAccount: optionsMerchantAccount[0],
     returnUrl: x.returnUrl,
     redirectUrl: x.redirectUrl,
   };
@@ -84,16 +93,6 @@ const PaymentModel = () => {
                   />
                 </div>
                 <div>
-                  <SelectField
-                    name="merchantAccount"
-                    label="Merchant Account"
-                    placeholder="BizboxECOM"
-                    currentValue={inputMerchantAccount}
-                    options={optionsMerchantAccount}
-                    onChange={(value: any) => setInputMerchantAccount(value)}
-                  />
-                </div>
-                <div>
                   <InputField
                     type="number"
                     label="Value"
@@ -107,7 +106,13 @@ const PaymentModel = () => {
                   <Button
                     kind={ButtonKind.Default}
                     text="Purchase"
-                    onClick={() => {}}
+                    onClick={() => {
+                      initiatePayment(purchaseData)
+                        .then((Response) =>
+                          gcashRedirect(Response.data.redirectUrl)
+                        )
+                        .catch((Error) => console.log(Error));
+                    }}
                   />
                 </div>
               </form>
