@@ -201,6 +201,8 @@ function findCurrency(type) {
       return 'gcash';
     case 'boletobancario':
       return 'BRL';
+    case 'gcash':
+      return 'PHP';
     default:
       return 'PHP';
   }

@@ -1,0 +1,17 @@
+@import "./variables.scss";
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@mixin fadein($time : 0.5s) {
+  animation: fadein $time;
+}

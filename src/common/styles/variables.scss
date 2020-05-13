@@ -1,0 +1,61 @@
+// BREAKPOINTS
+$breakpoint-smaller-phone: 480px !default;
+$breakpoint-phone: 767px !default;
+$breakpoint-tablet: 768px !default;
+$breakpoint-desktop: 992px !default;
+
+//COLOURS
+$primary-text-color: #373737 !default;
+$secondary-text-color: #ffba35 !default;
+$text-color-white: #fff !default;
+$text-color-error: #ff5050 !default;
+$text-color-black: #000 !default;
+$text-color-blue: #0061d3 !default;
+
+$primary-bg-color: #fff !default;
+$header-bg-color: #fafafa !default;
+$secondary-bg-color: #373737 !default;
+$background-color: #e5e5e5 !default;
+$textfield-color: #999999 !default;
+
+$accent-color: #ff5050 !default;
+$shadow-color: rgba(163, 163, 163, 0.25) !default;
+
+$text-input-focus-color: darken($primary-bg-color, 40%);
+$input-disabled-bg-color: hsl(
+  0,
+  0%,
+  95%
+); //Following react-select disabled bg color. Do not change coz react-select style is hard to override
+
+$primary-button-color: #373737 !default;
+$secondary-button-color: #ffba35 !default;
+$danger-button-color: #ff5050 !default;
+$dark-button-color: #373737 !default;
+$light-button-color: #f1f1f1 !default;
+$link-button-color: #f1f1f1 !default;
+$success-button-color: #0cad39 !default;
+
+$organization-settings-color: #f2f2f2 !default;
+$organization-button-color: #3b5574 !default;
+$organization-margin: 10px !default;
+$organization-border-color: #ffffff !default;
+$organization-data-color: #757272 !default;
+$organization-line-border: #dddddd !default;
+
+$search-bar-color: #ddd !default;
+
+$success-color: #53de6a !default;
+$warning-color: #ffba35 !default;
+$info-color: #007aff !default;
+$error-color: #ff5050 !default;
+
+//SIZES
+$header-height: 65px !default;
+$sidenav-desktop-width: 270px !default;
+
+//hr colours
+$hr-light-gray: #dadada;
+
+//icons colours
+$icon-gray: #979797;
