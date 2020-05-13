@@ -1,0 +1,36 @@
+@import '../../common/styles/variables.scss';
+@import '../../common/styles/mixins.scss';
+
+.container {
+  padding: 15px;
+  background: $organization-border-color;
+  box-shadow: -1px 6px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  margin-left: 20px;
+  margin-right: 24px;
+  height: 20vh;
+  width: 100vh;
+  font-size: large;
+  color: black;
+}
+
+.tablehead {
+  color: $organization-button-color;
+}
+
+.formButton {
+  padding-left: 15px;
+  margin-top: 5px;
+  margin-bottom: 60px;
+}
+
+.currentWrapper {
+  background: $background-color;
+  width: 100%;
+  height: auto;
+  overflow: auto;
+}
+
+.tableSpinner {
+  margin: auto;
+}

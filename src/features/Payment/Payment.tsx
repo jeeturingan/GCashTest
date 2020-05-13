@@ -11,6 +11,7 @@ import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
 import PurchaseModel from '../PurchaseModel';
 import PaymentModel from '../PaymentModel';
 import PaymentMethods from '../PaymentMethods';
+import ProductCart from '../Demo';
 
 export type purchaseDataModel = {
   amount: {
@@ -112,10 +113,14 @@ const App = () => {
             <Route path="/purchase">
               <PurchaseModel />
             </Route>
-            <Route path="/payment">
-              <PaymentModel />
-            </Route>
+            <Route path="/payment" component={PaymentModel}></Route>
+            <Route path="/demo" component={ProductCart} />
             <Route path="/">
+              <Link to="/demo">
+                <div>
+                  <Button text="Demo" />
+                </div>
+              </Link>
               <Link to="/paymentmethods">
                 <div>
                   <Button

@@ -199,8 +199,10 @@ function findCurrency(type) {
       return 'PLN';
     case 'boletobancario':
       return 'BRL';
+    case 'gcash':
+      return 'PHP';
     default:
-      return 'EUR';
+      return 'PHP';
   }
 }
 
