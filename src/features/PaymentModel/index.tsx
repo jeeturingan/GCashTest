@@ -8,11 +8,11 @@ import { InputField, Button, SelectField, ButtonKind } from 'modus-ui';
 //Dummy Model(Correct Model Format)
 export type purchaseDataModel = {
   amount?: {
-    currency: string;
-    value: number;
+    currency?: string;
+    value?: number;
   };
   paymentMethod?: {
-    type: string;
+    type?: string;
   };
   merchantAccount?: string;
   returnUrl?: string;
@@ -54,49 +54,43 @@ const PaymentModel = () => {
   ];
 
   const x = purchaseDetail;
-  const [inputPaymentType, setInputPaymentType] = useState(
-    optionsPaymentType[0]
-  );
-  const [inputCurrencyType, setInputCurrencyType] = useState(
-    optionsCurrencyType[0]
-  );
+  const [inputPaymentType, setInputPaymentType] = useState(optionsPaymentType[0]);
+  const [inputCurrencyType, setInputCurrencyType] = useState(optionsCurrencyType[0]);
 
   const initialValues = {
     amount: {
-      currency: optionsCurrencyType[0],
+      currency: inputCurrencyType,
       value: x.amount?.value
     },
     paymentMethod: {
-      type: optionsPaymentType[0]
+      type: inputPaymentType
     },
     merchantAccount: "BizboxECOM",
     returnUrl: "https://your-company.com/checkout?shopperOrder=12xy..",
   };
 
   const handleClick = (values: any) => {
-    const purchaseDataInput = {
-      amount: {
-        currency: inputCurrencyType.value,
-        value: values.value
-      },
-      paymentMethod: {
-        type: inputPaymentType.value
-      },
-      merchantAccount: "BizboxECOM",
-      returnUrl: "https://your-company.com/checkout?shopperOrder=12xy..",
-    }
-    console.log("ConSOLE",purchaseDataInput);
-  }
+    initiatePayment(values)
+      .then(res => {
+        gcashRedirect(res.data.redirectUrl)
+      })
+      .catch(error => {
+        console.log(error)
+      });
+  };
 
   return (
     <div>
       <h1>Payment Model</h1>
       <div>
         <Formik 
+          enableReinitialize={true}
+          validateOnBlur={false}
+          isInitialValid={true}
           initialValues={initialValues} 
-            onSubmit={(values) => {
+          onSubmit={values => {
               handleClick(values);
-            }}
+          }}
         >
           {(props) => {
             const { values, handleChange, handleSubmit } = props;
@@ -107,20 +101,24 @@ const PaymentModel = () => {
                   <SelectField
                     name="type"
                     label="Type"
-                    placeholder="GCash, Paymaya..."
+                    placeholder="Payment Type"
                     currentValue={inputPaymentType}
                     options={optionsPaymentType}
-                    onChange={(value: any) => setInputPaymentType(value)}
+                    onChange={(value: any) => {
+                      setInputPaymentType(value)
+                    }}
                   />
                 </div>
                 <div>
                   <SelectField
                     name="currency"
                     label="Currency"
-                    placeholder="PHP, EUR, USD..."
+                    placeholder="Currency"
                     currentValue={inputCurrencyType}
                     options={optionsCurrencyType}
-                    onChange={(value: any) => setInputCurrencyType(value)}
+                    onChange={(value: any) => {
+                      setInputCurrencyType(value);
+                    }}
                   />
                 </div>
                 <div>
@@ -130,15 +128,15 @@ const PaymentModel = () => {
                     name="amount.value"
                     placeholder="Please enter the value.."
                     onChange={handleChange}
-                    value={initialValues.amount.value}
+                    value={values.amount.value}
                   />
                 </div>
                 <div>
                   <Button
                     kind={ButtonKind.Default}
                     text="Purchase"
-                    onClick={() => {
-                      console.log();
+                    onClick={()=>{
+                      console.log(values);
                     }}
                   />
                 </div>
