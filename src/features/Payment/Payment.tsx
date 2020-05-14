@@ -43,16 +43,15 @@ export type paymentMethod = {
 
 //DUMMY DATA
 const purchaseData: purchaseDataModel = {
-    merchantAccount:"BizboxECOM",
-    amount:{
-      currency: 'PHP',
-      value: 1000
-    },
-    paymentMethod:{
-      type:"gcash"
-    },
-    returnUrl:"https://your-company.com/checkout?shopperOrder=12xy.."
-
+  merchantAccount: 'BizboxECOM',
+  amount: {
+    currency: 'PHP',
+    value: 1000,
+  },
+  paymentMethod: {
+    type: 'gcash',
+  },
+  returnUrl: 'https://your-company.com/checkout?shopperOrder=12xy..',
 };
 
 const paymentData: paymentDataModel = {
@@ -84,14 +83,14 @@ const App = () => {
   const mapPaymentMethods = (arrPaymentMethod: Array<paymentMethod>) => {
     let paymentMethods: RadioButtonGroupOption[] = [];
     arrPaymentMethod.map((data) => {
-        paymentMethods = paymentMethods.concat({
+      paymentMethods = paymentMethods.concat({
         id: data.type,
         text: data.name,
         value: data.type,
       });
     });
-    
-    return radioBtns = (
+
+    return (radioBtns = (
       <RadioButtonGroup
         label={'Payment Methods: '}
         options={paymentMethods}
@@ -100,7 +99,7 @@ const App = () => {
           setRadioValue(event.target.value);
         }}
       />
-    );
+    ));
   };
 
   return (
@@ -133,18 +132,18 @@ const App = () => {
                   />
                 </div>
               </Link>
-                <div>
-                  <Button
-                    text="Initiate Payment"
-                    onClick={() => {
-                      initiatePayment(purchaseData)
-                        .then((Response) =>
-                          gcashRedirect(Response.data.redirectUrl)
-                        )
-                        .catch((Error) => console.log(Error));
-                    }}
-                  />
-                </div>
+              <div>
+                <Button
+                  text="Initiate Payment"
+                  onClick={() => {
+                    initiatePayment(purchaseData)
+                      .then((Response) =>
+                        gcashRedirect(Response.data.redirectUrl)
+                      )
+                      .catch((Error) => console.log(Error));
+                  }}
+                />
+              </div>
               <Link to="/payment">
                 <div>
                   <Button
@@ -157,7 +156,15 @@ const App = () => {
                   />
                 </div>
               </Link>
-              <div></div>
+              <div>
+                <Button
+                  text="Test Button"
+                  onClick={() => {
+                    console.log(purchaseData);
+                    console.log(purchaseData.amount.value);
+                  }}
+                />
+              </div>
             </Route>
           </Switch>
         </BrowserRouter>

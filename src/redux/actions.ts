@@ -1,4 +1,4 @@
-import { Action } from 'redux';
+import { Action, Dispatch } from 'redux';
 import {
   purchaseDataModel,
   paymentMethodsModel,
@@ -48,7 +48,7 @@ export const postAdditionalPaymentSuccess = (resultCode: string) => {
 };
 
 export const setPaymentMethods = () => {
-  return (dispatch: any) => {
+  return (dispatch: Dispatch) => {
     getAdyenConfig();
     getPaymentMethods()
       .then((response) => {
@@ -61,7 +61,7 @@ export const setPaymentMethods = () => {
 };
 
 export const postPayment = (purchaseData: purchaseDataModel) => {
-  return (dispatch: any) => {
+  return (dispatch: Dispatch) => {
     initiatePayment(purchaseData)
       .then((response) => {
         dispatch(postPaymentSuccess(response.data.redirectUrl));
@@ -71,7 +71,7 @@ export const postPayment = (purchaseData: purchaseDataModel) => {
 };
 
 export const postAdditionalPayment = (paymentData: paymentDataModel) => {
-  return (dispatch: any) => {
+  return (dispatch: Dispatch) => {
     submitAdditionalDetails(paymentData)
       .then((response) => {
         dispatch(postAdditionalPaymentSuccess('response.data.resultCode'));

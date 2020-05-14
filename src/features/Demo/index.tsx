@@ -12,10 +12,12 @@ import {
   Button,
   ButtonKind,
 } from 'modus-ui';
-
 import styles from './styles.module.scss';
 import { getAdyenConfig, getPaymentMethods } from '../../api/checkout';
+import { setPaymentMethods } from '../../redux/actions';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkoutState } from '../../redux/state';
 
 type Props = {};
 
@@ -26,15 +28,16 @@ export type productModel = {
 };
 
 const ProductCart = (props: Props): JSX.Element => {
-  const [paymentMethods, setPaymentMethods] = useState();
+  const dispatch = useDispatch();
+
+  const paymentMethods = useSelector((state: checkoutState) => {
+    return state.paymentMethods;
+  });
+
+  const getPaymentMethods = () => dispatch(setPaymentMethods());
 
   useEffect(() => {
-    getAdyenConfig();
-    getPaymentMethods()
-      .then((Response) => {
-        setPaymentMethods(Response.data.paymentMethods);
-      })
-      .catch((Error) => console.log(Error));
+    getPaymentMethods();
   }, []);
 
   const productsInCart: Array<productModel> = [

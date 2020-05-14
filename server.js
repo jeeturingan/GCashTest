@@ -97,7 +97,6 @@ app.post('/api/getPaymentMethods', async (req, res) => {
       channel: 'Web',
       merchantAccount: process.env.MERCHANT_ACCOUNT,
     });
-    console.log(response);
     res.json(response);
   } catch (err) {
     console.error(`Error: ${err.message}, error code: ${err.errorCode}`);
@@ -149,7 +148,6 @@ app.post('/api/initiatePayment', async (req, res) => {
           httpOnly: true,
         });
     }
-    console.log({ paymentMethodType, resultCode, redirectUrl, action });
     res.json({ paymentMethodType, resultCode, redirectUrl, action });
   } catch (err) {
     console.error(`Error: ${err.message}, error code: ${err.errorCode}`);

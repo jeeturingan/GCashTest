@@ -4,6 +4,7 @@ import { Reducer } from 'redux';
 import { actionTypes, action } from './actions';
 
 const initialState: checkoutState = {
+  paymentMethods: [{ name: '', type: '', supportsRecurring: false }],
   redirectUrl: '',
   resultCode: '',
 };

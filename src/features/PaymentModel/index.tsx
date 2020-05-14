@@ -53,86 +53,6 @@ const PaymentModel = () => {
     redirectUrl: x.redirectUrl,
   };
 
-<<<<<<< HEAD
-    const initialValues = {
-        currency: optionsCurrencyType[0],
-        type: optionsPaymentType[0],
-        value: x.value,
-        merchantAccount: optionsMerchantAccount[0],
-        returnUrl: x.returnUrl,
-        redirectUrl: x.redirectUrl
-    }
-
-    return (
-        <div>
-            <h1>Payment Model</h1>
-            <div>
-                <Formik initialValues={initialValues} 
-                    onSubmit={(data)=>{console.log("Submit:", data)}}>
-                    {props => {
-                        const { values, handleChange, handleSubmit } = props;
-                        return(
-                            <form onSubmit={handleSubmit}>
-                                <h3>Purchase Detail</h3>
-                                <div>
-                                    <SelectField 
-                                        name="type"
-                                        label="Type"
-                                        placeholder="GCash, Paymaya..."
-                                        currentValue={inputPaymentType}
-                                        options={optionsPaymentType}
-                                        onChange={(value: any) => setInputPaymentType(value)}
-                                    />
-                                </div>
-                                <div>
-                                    <SelectField 
-                                        name="currency"
-                                        label="Currency"
-                                        placeholder="PHP, EUR, USD..."
-                                        currentValue={inputCurrencyType}
-                                        options={optionsCurrencyType}
-                                        onChange={(value: any) => setInputCurrencyType(value)}
-                                    />
-                                </div>
-                                <div>
-                                    <SelectField 
-                                        name="merchantAccount"
-                                        label="Merchant Account"
-                                        placeholder="BizboxECOM"
-                                        currentValue={inputMerchantAccount}
-                                        options={optionsMerchantAccount}
-                                        onChange={(value: any) => setInputMerchantAccount(value)}
-                                    />
-                                </div>
-                                <div>
-                                    <InputField 
-                                        type="number"
-                                        label="Value"
-                                        name="value"
-                                        placeholder="Please enter the value.."
-                                        onChange={handleChange}
-                                        value={values.value}
-                                    />
-                                </div>
-                                <div>
-                                    <Button 
-                                        kind={ButtonKind.Default}
-                                        text="Checkout"
-                                        onClick={()=>{
-                                    
-                                        }}
-                                    />
-                                </div>
-                            <pre style={{textAlign: 'left'}}>{JSON.stringify(values, null, 2)}</pre>
-                            </form>
-                        );
-                    }}
-                </Formik>
-            </div>
-        </div>
-    );
-}
-=======
   return (
     <div>
       <h1>Payment Model</h1>
@@ -198,6 +118,5 @@ const PaymentModel = () => {
     </div>
   );
 };
->>>>>>> ef4f150e3e0f3b7c396f199082f8a9541786feec
 
 export default PaymentModel;

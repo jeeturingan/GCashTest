@@ -1,5 +1,5 @@
 export type checkoutState = {
-  paymentMethods?: paymentMethodsModel;
+  paymentMethods: [{ name: string; type: string; supportsRecurring: boolean }];
   redirectUrl: string;
   resultCode: string;
 };
