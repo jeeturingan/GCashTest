@@ -70,7 +70,19 @@ const PaymentModel = () => {
   };
 
   const handleClick = (values: any) => {
-    initiatePayment(values)
+    const purchaseDetailInput = {
+      amount: {
+        currency: values.amount.currency.value,
+        value: values.value
+      },
+      paymentMethod: {
+        type: values.paymentMethod.type.value
+      },
+      merchantAccount: "BizboxECOM",
+      returnUrl: "https://your-company.com/checkout?shopperOrder=12xy..",
+    }
+
+    initiatePayment(purchaseDetailInput)
       .then(res => {
         gcashRedirect(res.data.redirectUrl)
       })
@@ -99,18 +111,6 @@ const PaymentModel = () => {
                 <h3>Purchase Detail</h3>
                 <div>
                   <SelectField
-                    name="type"
-                    label="Type"
-                    placeholder="Payment Type"
-                    currentValue={inputPaymentType}
-                    options={optionsPaymentType}
-                    onChange={(value: any) => {
-                      setInputPaymentType(value)
-                    }}
-                  />
-                </div>
-                <div>
-                  <SelectField
                     name="currency"
                     label="Currency"
                     placeholder="Currency"
@@ -118,6 +118,18 @@ const PaymentModel = () => {
                     options={optionsCurrencyType}
                     onChange={(value: any) => {
                       setInputCurrencyType(value);
+                    }}
+                  />
+                </div>
+                <div>
+                  <SelectField
+                    name="type"
+                    label="Type"
+                    placeholder="Payment Type"
+                    currentValue={inputPaymentType}
+                    options={optionsPaymentType}
+                    onChange={(value: any) => {
+                      setInputPaymentType(value)
                     }}
                   />
                 </div>
@@ -134,13 +146,11 @@ const PaymentModel = () => {
                 <div>
                   <Button
                     kind={ButtonKind.Default}
-                    text="Purchase"
-                    onClick={()=>{
-                      console.log(values);
-                    }}
+                    text="Checkout"
+                    onClick={handleSubmit}
                   />
                 </div>
-                  <pre style={{textAlign:"left"}}>{JSON.stringify(values, null, 2)}</pre>
+                  <pre style={{textAlign:'left'}}>{JSON.stringify(values, null, 2)}</pre>
               </form>
             );
           }}
