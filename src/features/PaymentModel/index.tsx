@@ -2,15 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import { initiatePayment } from '../../api/checkout';
 import { InputField, Button, SelectField, ButtonKind } from 'modus-ui';
-import {purchaseDataModel} from '../Payment/Payment';
 
-export type purchaseDetailModel1 = {
-  currency?: string;
-  value?: number;
-  type?: string;
+
+
+//Dummy Model(Correct Model Format)
+export type purchaseDataModel = {
+  amount?: {
+    currency: string;
+    value: number;
+  };
+  paymentMethod?: {
+    type: string;
+  };
   merchantAccount?: string;
   returnUrl?: string;
-  redirectUrl?: string;
+  redirectUrl?: any;
 };
 
 //DUMMY Data
@@ -27,10 +33,11 @@ const purchaseData: purchaseDataModel = {
 
 };
 
-const purchaseDetailInitial: purchaseDetailModel1 = {};
+const purchaseDetailInitial: purchaseDataModel = {};
 
 const PaymentModel = () => {
   const [purchaseDetail, setPurchaseDetail] = useState(purchaseDetailInitial);
+
   const gcashRedirect = (redirectUrl: string) => {
     window.location.replace(redirectUrl);
   };
@@ -55,18 +62,42 @@ const PaymentModel = () => {
   );
 
   const initialValues = {
-    currency: optionsCurrencyType[0],
-    type: optionsPaymentType[0],
-    value: x.value,
-    returnUrl: x.returnUrl,
-    redirectUrl: x.redirectUrl,
+    amount: {
+      currency: optionsCurrencyType[0],
+      value: x.amount?.value
+    },
+    paymentMethod: {
+      type: optionsPaymentType[0]
+    },
+    merchantAccount: "BizboxECOM",
+    returnUrl: "https://your-company.com/checkout?shopperOrder=12xy..",
   };
+
+  const handleClick = (values: any) => {
+    const purchaseDataInput = {
+      amount: {
+        currency: inputCurrencyType.value,
+        value: values.value
+      },
+      paymentMethod: {
+        type: inputPaymentType.value
+      },
+      merchantAccount: "BizboxECOM",
+      returnUrl: "https://your-company.com/checkout?shopperOrder=12xy..",
+    }
+    console.log("ConSOLE",purchaseDataInput);
+  }
 
   return (
     <div>
       <h1>Payment Model</h1>
       <div>
-        <Formik initialValues={initialValues} onSubmit={() => {}}>
+        <Formik 
+          initialValues={initialValues} 
+            onSubmit={(values) => {
+              handleClick(values);
+            }}
+        >
           {(props) => {
             const { values, handleChange, handleSubmit } = props;
             return (
@@ -96,10 +127,10 @@ const PaymentModel = () => {
                   <InputField
                     type="number"
                     label="Value"
-                    name="value"
+                    name="amount.value"
                     placeholder="Please enter the value.."
                     onChange={handleChange}
-                    value={values.value}
+                    value={initialValues.amount.value}
                   />
                 </div>
                 <div>
@@ -107,14 +138,11 @@ const PaymentModel = () => {
                     kind={ButtonKind.Default}
                     text="Purchase"
                     onClick={() => {
-                      initiatePayment(purchaseData)
-                        .then((Response) =>
-                          gcashRedirect(Response.data.redirectUrl)
-                        )
-                        .catch((Error) => console.log(Error));
+                      console.log();
                     }}
                   />
                 </div>
+                  <pre style={{textAlign:"left"}}>{JSON.stringify(values, null, 2)}</pre>
               </form>
             );
           }}

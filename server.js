@@ -183,7 +183,7 @@ app.post('/api/submitAdditionalDetails', async (req, res) => {
 
 // Handles any requests that doesn't match the above
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'build', 'index.tsx'));
 });
 
 /* ################# end CLIENT ENDPOINTS ###################### */
