@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Table,
   TableHead,
   TableHeader,
   TableRow,
   TableCell,
-  IconTypes,
-  IconAngle,
-  IconSize,
-  IconButton,
   Button,
-  ButtonKind,
 } from 'modus-ui';
-import styles from './styles.module.scss';
-import { setPaymentMethods } from '../../redux/actions';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import styles from './styles.module.scss';
+import { setPaymentMethods } from '../../redux/actions';
 import { checkoutState } from '../../redux/state';
 
 type Props = {};

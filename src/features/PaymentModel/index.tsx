@@ -1,23 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Formik } from 'formik';
 import { postPayment } from '../../redux/actions';
 import { InputField, Button, SelectField, ButtonKind } from 'modus-ui';
-import { useDispatch, useSelector } from 'react-redux';
-import { checkoutState, purchaseDataModel } from '../../redux/state';
+import { useDispatch } from 'react-redux';
+import { purchaseDataModel } from '../../redux/state';
 
 //DUMMY Data
-const purchaseData: purchaseDataModel = {
-  merchantAccount: 'BizboxECOM',
-  amount: {
-    currency: 'PHP',
-    value: 1000,
-  },
-  paymentMethod: {
-    type: 'gcash',
-  },
-  reference: 'YOUR_ORDER_NUMBER',
-  returnUrl: 'https://your-company.com/checkout?shopperOrder=12xy..',
-};
 
 const optionsPaymentType = [
   { value: 'gcash', label: 'Gcash' },
@@ -45,9 +33,6 @@ const purchaseDetailInitial: purchaseDataModel = {
 
 const PaymentModel = () => {
   const dispatch = useDispatch();
-  const redirectUrl = useSelector((state: checkoutState) => {
-    return state.redirectUrl;
-  });
 
   const initiatePayment = (purchaseData: purchaseDataModel) => {
     dispatch(postPayment(purchaseData));

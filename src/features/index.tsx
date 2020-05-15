@@ -6,7 +6,7 @@ import { submitAdditionalDetails } from '../api/checkout';
 import PurchaseModel from './PurchaseModel';
 import PaymentModel from './PaymentModel';
 import PaymentMethods from './PaymentMethods';
-import ProductCart from './Demo';
+import ProductCart from './demo';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setPaymentMethods,
@@ -14,6 +14,7 @@ import {
   postAdditionalPayment,
 } from '../redux/actions';
 import * as model from '../redux/state';
+import { Status } from './status/Status';
 
 export type purchaseDataModel = {
   amount: {
@@ -128,8 +129,9 @@ const App = () => {
             <Route path="/purchase">
               <PurchaseModel />
             </Route>
-            <Route path="/payment" component={PaymentModel}></Route>
+            <Route path="/payment" component={PaymentModel} />
             <Route path="/demo" component={ProductCart} />
+            <Route path="/status" component={Status} />
             <Route path="/">
               <Link to="/demo">
                 <div>

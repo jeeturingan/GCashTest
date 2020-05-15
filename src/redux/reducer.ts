@@ -1,4 +1,3 @@
-import * as checkout from '../api/checkout';
 import { checkoutState } from './state';
 import { Reducer } from 'redux';
 import { actionTypes, action } from './actions';

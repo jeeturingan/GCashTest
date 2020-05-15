@@ -53,6 +53,7 @@ app.all('/api/handleShopperRedirect', async (req, res) => {
   payload['details'] = req.method === 'GET' ? req.query : req.body;
   payload['paymentData'] = req.cookies['paymentData'];
   const originalHost = req.cookies['originalHost'] || '';
+  const localHost = 'http://localhost:3000';
 
   try {
     const response = await checkout.paymentsDetails(payload);
@@ -61,19 +62,23 @@ app.all('/api/handleShopperRedirect', async (req, res) => {
     // Conditionally handle different result codes for the shopper
     switch (response.resultCode) {
       case 'Authorised':
-        res.redirect(`${originalHost}/status/success`);
+        res.redirect(`${localHost}/status/success`);
+        //res.redirect(`${originalHost}/status/success`);
         break;
       case 'Pending':
       case 'Received':
-        res.redirect(`${originalHost}/status/pending`);
+        res.redirect(`${localHost}/status/pending`);
+        //res.redirect(`${originalHost}/status/pending`);
         break;
       case 'Refused':
-        res.redirect(`${originalHost}/status/failed`);
+        res.redirect(`${localHost}/status/failed`);
+        //res.redirect(`${originalHost}/status/failed`);
         break;
       default:
-        res.redirect(
-          `${originalHost}/status/error?reason=${response.resultCode}`
-        );
+        res.redirect(`${localHost}/status/error?reason=${response.resultCode}`);
+        // res.redirect(
+        //   `${originalHost}/status/error?reason=${response.resultCode}`
+        // );
         break;
     }
   } catch (err) {
