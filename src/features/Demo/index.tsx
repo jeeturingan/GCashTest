@@ -13,7 +13,6 @@ import {
   ButtonKind,
 } from 'modus-ui';
 import styles from './styles.module.scss';
-import { getAdyenConfig, getPaymentMethods } from '../../api/checkout';
 import { setPaymentMethods } from '../../redux/actions';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';

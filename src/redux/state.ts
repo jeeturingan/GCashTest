@@ -31,3 +31,9 @@ export type paymentDataModel = {
 export type paymentMethodsModel = {
   paymentMethods: [{ name: string; type: string; supportsRecurring: boolean }];
 };
+
+export type paymentMethodModel = {
+  name: string;
+  type: string;
+  supportsRecurring: boolean;
+};

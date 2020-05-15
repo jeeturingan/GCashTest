@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import './Payment.css';
-import {
-  getAdyenConfig,
-  getPaymentMethods,
-  initiatePayment,
-  submitAdditionalDetails,
-} from '../../api/checkout';
 import { Button, RadioButtonGroupOption, RadioButtonGroup } from 'modus-ui';
 import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
-import PurchaseModel from '../PurchaseModel';
-import PaymentModel from '../PaymentModel';
-import PaymentMethods from '../PaymentMethods';
-import ProductCart from '../Demo';
+import './index.css';
+import { submitAdditionalDetails } from '../api/checkout';
+import PurchaseModel from './PurchaseModel';
+import PaymentModel from './PaymentModel';
+import PaymentMethods from './PaymentMethods';
+import ProductCart from './Demo';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setPaymentMethods,
+  postPayment,
+  postAdditionalPayment,
+} from '../redux/actions';
+import * as model from '../redux/state';
 
 export type purchaseDataModel = {
   amount: {
@@ -21,6 +23,7 @@ export type purchaseDataModel = {
   paymentMethod: {
     type: string;
   };
+  reference: string;
   merchantAccount: string;
   returnUrl: string;
   redirectUrl?: any;
@@ -42,7 +45,7 @@ export type paymentMethod = {
 };
 
 //DUMMY DATA
-const purchaseData: purchaseDataModel = {
+const purchaseData: model.purchaseDataModel = {
   merchantAccount: 'BizboxECOM',
   amount: {
     currency: 'PHP',
@@ -51,10 +54,11 @@ const purchaseData: purchaseDataModel = {
   paymentMethod: {
     type: 'gcash',
   },
+  reference: 'YOUR_ORDER_NUMBER',
   returnUrl: 'https://your-company.com/checkout?shopperOrder=12xy..',
 };
 
-const paymentData: paymentDataModel = {
+const paymentData: model.paymentDataModel = {
   paymentData: 'Ab02b4c0!BQABAgCJN1wRZuGJmq8dMncmypvknj9s7l5Tj...',
   details: {
     payload: 'Ab02b4c0!BQABAgCW5sxB4e/==',
@@ -66,41 +70,52 @@ const App = () => {
   const [radioValue, setRadioValue] = useState('');
   let radioBtns;
 
+  const paymentMethods = useSelector((state: model.checkoutState) => {
+    return state.paymentMethods;
+  });
+
+  const dispatch = useDispatch();
+  const getPaymentMethods = () => {
+    dispatch(setPaymentMethods());
+  };
+  const initiatePurchase = (purchaseData: model.purchaseDataModel) => {
+    dispatch(postPayment(purchaseData));
+  };
+  const postAdditionalPayment = (paymentData: model.paymentDataModel) => {
+    dispatch(postAdditionalPayment(paymentData));
+  };
+
   useEffect(() => {
-    getAdyenConfig();
-    getPaymentMethods()
-      .then((Response) => {
-        mapPaymentMethods(Response.data.paymentMethods);
-        //console.log(Response.data);
-      })
-      .catch((Error) => console.log(Error));
+    getPaymentMethods();
   }, []);
 
   const gcashRedirect = (redirectUrl: string) => {
     window.location.replace(redirectUrl);
   };
 
-  const mapPaymentMethods = (arrPaymentMethod: Array<paymentMethod>) => {
-    let paymentMethods: RadioButtonGroupOption[] = [];
-    arrPaymentMethod.map((data) => {
-      paymentMethods = paymentMethods.concat({
-        id: data.type,
-        text: data.name,
-        value: data.type,
-      });
-    });
+  // const mapPaymentMethods = (
+  //   arrPaymentMethod: Array<model.paymentMethodModel>
+  // ) => {
+  //   let paymentMethods: RadioButtonGroupOption[] = [];
+  //   arrPaymentMethod.map((data) => {
+  //     paymentMethods = paymentMethods.concat({
+  //       id: data.type,
+  //       text: data.name,
+  //       value: data.type,
+  //     });
+  //   });
 
-    return (radioBtns = (
-      <RadioButtonGroup
-        label={'Payment Methods: '}
-        options={paymentMethods}
-        value={radioValue}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>): void => {
-          setRadioValue(event.target.value);
-        }}
-      />
-    ));
-  };
+  //   return (radioBtns = (
+  //     <RadioButtonGroup
+  //       label={'Payment Methods: '}
+  //       options={paymentMethods}
+  //       value={radioValue}
+  //       onChange={(event: React.ChangeEvent<HTMLInputElement>): void => {
+  //         setRadioValue(event.target.value);
+  //       }}
+  //     />
+  //   ));
+  // };
 
   return (
     <div className="App">
@@ -118,44 +133,35 @@ const App = () => {
             <Route path="/">
               <Link to="/demo">
                 <div>
-                  <Button text="Demo" />
-                </div>
-              </Link>
-              <Link to="/paymentmethods">
-                <div>
-                  <Button
-                    text="Get Payment Methods"
-                    onClick={() => {
-                      getAdyenConfig();
-                      getPaymentMethods();
-                    }}
-                  />
+                  <Button text="Simulation" />
                 </div>
               </Link>
               <div>
                 <Button
+                  text="Get Payment Methods"
+                  onClick={() => {
+                    getPaymentMethods();
+                  }}
+                />
+              </div>
+              <div>
+                <Button
                   text="Initiate Payment"
                   onClick={() => {
-                    initiatePayment(purchaseData)
-                      .then((Response) =>
-                        gcashRedirect(Response.data.redirectUrl)
-                      )
+                    initiatePurchase(purchaseData);
+                  }}
+                />
+              </div>
+              <div>
+                <Button
+                  text="Additional Payment"
+                  onClick={() => {
+                    submitAdditionalDetails(paymentData)
+                      .then((Response) => console.log(Response))
                       .catch((Error) => console.log(Error));
                   }}
                 />
               </div>
-              <Link to="/payment">
-                <div>
-                  <Button
-                    text="Additional Payment"
-                    onClick={() => {
-                      submitAdditionalDetails(paymentData)
-                        .then((Response) => console.log(Response))
-                        .catch((Error) => console.log(Error));
-                    }}
-                  />
-                </div>
-              </Link>
               <div>
                 <Button
                   text="Test Button"

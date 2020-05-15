@@ -1,8 +1,5 @@
 import axios, { AxiosInstance, AxiosPromise } from 'axios';
-import {
-  purchaseDataModel,
-  paymentDataModel,
-} from '../features/Payment/Payment';
+import { purchaseDataModel, paymentDataModel } from '../redux/state';
 
 const api: AxiosInstance = axios.create({
   baseURL: 'http://localhost:8080/',
