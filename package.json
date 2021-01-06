@@ -11,7 +11,7 @@
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "chrono-node": "^1.4.6",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
